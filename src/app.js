@@ -16,6 +16,8 @@ app.get('/', (req, res) => res.json({ ok: true, message: 'Job Board API' }));
 app.use('/api/companies', require('./routes/companies.routes'));
 app.use('/api/jobs', require('./routes/jobs.routes'));
 app.use('/api/applicants', require('./routes/applicants.routes'));
+app.use('/api/users', require('./routes/users.routes'));
+
 
 app.use(errorHandler);
 
