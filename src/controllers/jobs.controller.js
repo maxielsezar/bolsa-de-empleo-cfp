@@ -2,14 +2,21 @@ const Job = require('../models/Job');
 
 exports.create = async (req, res, next) => {
   try {
-    const job = await Job.create(req.body);
+   const job = await Job.create(req.body);
     res.status(201).json(job);
   } catch (err) { next(err); }
 };
 
 exports.getAll = async (req, res, next) => {
   try {
-    const jobs = await Job.find().populate('company').sort({ createdAt: -1 });
+    const { title,location, company } = req.query;
+    const filtro = {};
+
+    if (title) filtro.title = title;
+    if (location) filtro.location = location;
+    if (company) filtro.company = company;
+ 
+    const jobs = await Job.find(filtro).populate('company').sort({ createdAt: -1 });
     res.json(jobs);
   } catch (err) { next(err); }
 };
