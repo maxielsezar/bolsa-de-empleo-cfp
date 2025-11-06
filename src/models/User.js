@@ -9,6 +9,3 @@ const userSchema = new Schema({
 }, { timestamps: true });
 
 module.exports = model('User', userSchema);
-
-
-{isLogin && <h1>se guardo el usuario</h1>}
