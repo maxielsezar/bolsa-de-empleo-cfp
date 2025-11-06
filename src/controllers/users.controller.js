@@ -9,7 +9,13 @@ exports.create = async (req, res, next) => {
 
 exports.getAll = async (req, res, next) => {
   try {
-    const users = await User.find();
+     const { name,lastName, email } = req.query;
+    const filtro = {};
+
+    if (name) filtro.name = name;
+    if (lastName) filtro.lastName = lastName;
+    if (email) filtro.email = email;
+    const users = await User.find(filtro);
     res.json(users);
   } catch (err) { next(err); }
 };
