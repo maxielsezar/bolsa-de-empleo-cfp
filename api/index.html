@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Subir y Descargar PDF</title>
+</head>
+<body>
+    <h2>Subir Archivo PDF</h2>
+    <form action="/api/files/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".pdf">
+        <button type="submit">Subir PDF</button>
+    </form>
+
+    <h2>Descargar PDF</h2>
+    <p>Introduce el nombre del archivo para descargar:</p>
+    <form onsubmit="downloadFile(event)">
+        <input type="text" id="filenameInput" placeholder="ejemplo.pdf" required>
+        <button type="submit">Descargar</button>
+    </form>
+    <script>
+        function downloadFile(event) {
+            event.preventDefault();
+            const filename = document.getElementById('filenameInput').value;
+            window.location.href = `/api/files/download/${filename}`;
+        }
+    </script>
+</body>
+</html>

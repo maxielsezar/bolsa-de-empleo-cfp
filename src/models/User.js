@@ -6,6 +6,7 @@ const userSchema = new Schema({
   email: { type: String, required: true },
   tel:{ type: String, required: true },
   password:{ type: String, required: true },
+  pdfFileId: { type: Types.ObjectId, ref: 'uploads.files' },
 }, { timestamps: true });
 
 module.exports = model('User', userSchema);

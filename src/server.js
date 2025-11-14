@@ -1,16 +1,14 @@
-require('dotenv').config();
-const app = require('./app');
+const express = require('express');
 const connectDB = require('./config/db');
+const fileRoutes = require('./routes/fileRoutes');
+const path = require('path');
 
-const MONGO_URI = process.env.MONGO_URI;
+const app = express();
 
-let conn = null;
-async function ensureConnection() {
-  if (!conn) conn = connectDB(MONGO_URI);
-  return conn;
-}
+connectDB();
 
-module.exports = async (req, res) => {
-  await ensureConnection();
-  return app(req, res);
-};
+app.use(express.static('views'));
+
+app.use('/api/files', fileRoutes); 
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => console.log(`Servidor corriendo en el puerto ${PORT}`));
