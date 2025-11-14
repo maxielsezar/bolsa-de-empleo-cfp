@@ -1,4 +1,6 @@
 const { Schema, model, Types } = require('mongoose');
+const { appconfiguraciones } = require('../configuraciones');
+
 
 const userSchema = new Schema({
   name: { type: String, required: true },
@@ -7,5 +9,10 @@ const userSchema = new Schema({
   tel:{ type: String, required: true },
   password:{ type: String, required: true },
 }, { timestamps: true });
+
+productSchema.methods.setImgUrl= function setImgUrl (filename) {
+   const { host, port } =appconfiguraciones
+   this.ImgUrl = '${host}:${port}/public/${filename}'
+}
 
 module.exports = model('User', userSchema);

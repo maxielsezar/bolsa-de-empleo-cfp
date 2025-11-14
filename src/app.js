@@ -4,7 +4,18 @@ const helmet = require('helmet');
 const cors = require('cors');
 const errorHandler = require('./middlewares/errorHandler');
 
+const bodyParser = require('body-parser')
+const productRoutes = require('/routes/product')
+
 const app = express();
+
+app.use(bodyParser.urlencoded({ extend: false }))
+app.use(bodyParser.json())
+
+app.use('/public', express.static())
+
+app.use('/v1', productRoutes)
+
 
 app.use(helmet());
 app.use(cors());
