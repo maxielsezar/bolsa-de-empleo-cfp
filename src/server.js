@@ -1,14 +1,19 @@
-const express = require('express');
+require('dotenv').config();
+const app = require('./app');
 const connectDB = require('./config/db');
-const fileRoutes = require('./routes/fileRoutes');
-const path = require('path');
 
-const app = express();
+const MONGO_URI = process.env.MONGO_URI;
 
-connectDB();
+let conn = null;
+async function ensureConnection() {
+  if (!conn) {
+    conn = connectDB(MONGO_URI);
+  }
+  return conn;
+}
 
-app.use(express.static('views'));
-
-app.use('/api/files', fileRoutes); 
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`Servidor corriendo en el puerto ${PORT}`));
+// Exportar el handler que Vercel usa
+module.exports = async (req, res) => {
+  await ensureConnection();
+  return app(req, res);
+};
